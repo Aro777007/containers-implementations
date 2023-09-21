@@ -1,0 +1,71 @@
+#include <iostream>
+#include <list>
+#include <vector>
+using namespace std;
+
+template <typename KeyType, typename ValueType>
+class HashTable
+{
+public:
+    int size;
+    vector<pair<KeyType, ValueType>> table;
+
+    HashTable(int initialSize = 100) : size(initialSize), table(initialSize) {}
+
+
+    int hashFunction(const KeyType& keyy) const
+    {
+        int hash = 0;
+        for (int i = 0; i < 10; ++i)
+        {
+            hash = hash * 3;
+        }
+        return hash % size;
+
+    }
+
+    void insert(const KeyType& keyy, const ValueType& vvalue)
+    {
+        int index = hashFunction(keyy);
+        while (!table[index].first.empty())
+        {
+            index = (index + 1) % size;
+        }
+        table[index] = std::make_pair(keyy, vvalue);
+    }
+
+    bool find(const KeyType& keyy, ValueType& vvalue) const
+    {
+        int index = hashFunction(keyy);
+        while (!table[index].first.empty())
+        {
+            if (table[index].first == keyy)
+            {
+                vvalue = table[index].second;
+                return true;
+            }
+            index = (index + 1) % size;
+        }
+        return false;
+    }
+
+};
+
+int main()
+{
+    HashTable<std::string, int> ht;
+
+    ht.insert("cls", 5);
+    ht.insert("s", 8);
+
+    int value;
+    if (ht.find("cls", value))
+    {
+        cout << "found " << value << std::endl;
+    }
+    else
+    {
+        cout << "not found" << std::endl;
+    }
+
+}
