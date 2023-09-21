@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+class Set {
+private:
+    vector<T> elements;
+
+public:
+    void insert(T element) {
+        if (find(elements.begin(), elements.end(), element) == elements.end())
+        {
+            elements.push_back(element);
+        }
+    }
+
+    void ssort() {
+        sort(elements.begin(), elements.end());
+    }
+
+    void remove(T element) {
+        for (typename vector<T>::iterator it = elements.begin(); it != elements.end(); ++it) {
+            if (*it == element) {
+                elements.erase(it);
+                return;
+            }
+        }
+    }
+
+    void print() const {
+        for (const T& element : elements) {
+            cout << element << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Set<int> mySet;
+
+    mySet.insert(1);
+    mySet.insert(2);
+    mySet.insert(2);
+    mySet.ssort();
+
+    mySet.print();
+
+    mySet.remove(2);
+
+    mySet.print();
+
+    return 0;
+}
